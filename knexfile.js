@@ -6,7 +6,7 @@ module.exports = {
     connection: {
       filename: './database/auth.db3',
     },
-    migration: {
+    migrations: {
       directory: './database/migrations',
     },
     seeds: {
