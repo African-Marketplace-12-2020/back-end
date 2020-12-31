@@ -4,6 +4,7 @@ require("colors");
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
+const session = require("express-session")
 
 const server = express();
 
@@ -13,6 +14,11 @@ const userRouter = require("../users/users-router.js")
 server.use(helmet());
 server.use(cors());
 server.use(express.json());
+server.use(session({
+  resave:false, //aviod creating sessions that have no changed
+  saveUninitialized: false, //GDPR lawsagains setting cookies automatically 
+  secret: "keep it secret, keep it safe", //used to cryptograpically sign the cookie 
+}))
 
 
 server.use("/api/items", itemsRouter)
