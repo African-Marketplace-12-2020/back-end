@@ -1,9 +1,10 @@
 const express = require("express");
 const Items = require("./items-model");
+const { restrict } = require("../users/users-middleware")
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.get("/", restrict(), (req, res) => {
   Items.find()
     .then((item) => {
       res.json(item);
@@ -13,7 +14,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", restrict(), (req, res) => {
   const { id } = req.params;
 
   Items.findById(id)
@@ -29,7 +30,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/", restrict(), (req, res) => {
   const newItem = req.body;
 
   Items.add(newItem)
@@ -41,7 +42,7 @@ router.post("/", (req, res) => {
     });
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", restrict(), async (req, res, next) => {
   try {
     Items.update(req.params.id, req.body)
       .then((updatedItem) => {
@@ -68,7 +69,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", restrict(),(req, res) => {
   const { id } = req.params;
 
   Items.remove(id)

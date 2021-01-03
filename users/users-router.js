@@ -1,5 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken")
 const Users = require("./users-model");
 const { restrict } = require("./users-middleware");
 
@@ -54,13 +55,18 @@ router.post("/login", async (req, res, next) => {
         message: "Invalid Credentials",
       });
     }
-
-    // creates a new session and send it back to the client
-    req.session.user = user;
+const token = jwt.sign({
+  userId: user.id,
+}, process.env.JWT_SECRET)
 
     res.json({
-      message: `Welcome ${user.username}!`,
+      message: `Welcome ${user.username}!`, 
+      token: token
     });
+
+
+
+
   } catch (error) {
     next(error);
   }

@@ -1,47 +1,32 @@
-const bcrypt = require("bcryptjs")
-const Users = require("./users-model")
+const jwt = require("jsonwebtoken");
 
+function restrict() {
+  return async (req, res, next) => {
+    try {
+      const token = req.headers.authorization;
+      if (!token) {
+        return res.status(401).json({
+          message: "Invalid credentials",
+        });
+      }
 
-function restrict () {
-
-    return async (req, res, next) => {
-        try {
-            // const {username, password } = req.headers
-
-            // if(!username || !password) {
-            //     return res.status(401).json({
-            //         message: "Invalid credentials"
-            //     })
-            // }
-
-            // const user = await Users.findBy({ username }).first()
-            // if(!user) {
-            //     return res.status(401).json({
-            //         message: "Invalid credentials"
-            //     })
-            // }
-
-            // const passwordValid = await bcrypt.compare(password, user.password)
-            // if(!passwordValid) {
-            //     return res.status(401).json({
-            //         message: "Invalid credentials"
-            //     })
-            // }
-
-            if (!req.session || !req.session.user) {
-                return res.status(401).json({
-                    message: "Invalid credentials"
-                })
-            }
-
-            next()
-
-        } catch (error) {
-            next(error)
+      jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
+        if (error) {
+          return res.status(401).json({
+            message: "Invalid credentials",
+          });
         }
+
+        req.token = decoded;
+      });
+
+      next();
+    } catch (error) {
+      next(error);
     }
+  };
 }
 
 module.exports = {
-    restrict
-}
+  restrict,
+};

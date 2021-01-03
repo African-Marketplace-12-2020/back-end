@@ -16,8 +16,8 @@ server.use(cors());
 server.use(express.json());
 server.use(session({
   resave:false, //aviod creating sessions that have no changed
-  saveUninitialized: false, //GDPR lawsagains setting cookies automatically 
-  secret: "keep it secret, keep it safe", //used to cryptograpically sign the cookie 
+  saveUninitialized: false, 
+  secret: process.env.JWT_SECRET, 
 }))
 
 
