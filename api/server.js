@@ -15,14 +15,14 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 server.use(session({
-  resave:false, //aviod creating sessions that have no changed
+  resave:false, 
   saveUninitialized: false, 
   secret: process.env.JWT_SECRET, 
 }))
 
 
-server.use("/api/items", itemsRouter)
-server.use("/api/users", userRouter)
+server.use("/items", itemsRouter)
+server.use("/", userRouter)
 
 server.get("/api", (req, res) => {
   res.json({ message: "Your API is up and running" });
