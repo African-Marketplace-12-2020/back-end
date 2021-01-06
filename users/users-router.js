@@ -17,7 +17,7 @@ router.get("/", restrict(), async (req, res, next) => {
 });
 
 // create a new user
-router.post("/register", async (req, res, next) => {
+router.post("/signup", async (req, res, next) => {
   try {
     const { username, password } = req.body;
     const user = await Users.findBy({ username }).first();
@@ -38,7 +38,7 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
-router.post("/login", async (req, res, next) => {
+router.post("/hello", async (req, res, next) => {
   try {
     const { username, password } = req.body;
     const user = await Users.findBy({ username }).first();
