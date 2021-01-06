@@ -7,7 +7,7 @@ const { restrict } = require("./users-middleware");
 const router = express.Router();
 
 // get the list of users
-router.get("/", restrict(), async (req, res, next) => {
+router.get("/", restrict, async (req, res, next) => {
   try {
     res.json(await Users.find());
   } catch (error) {
@@ -37,7 +37,7 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
-router.post("/login", async (req, res, next) => {
+router.get("/login", async (req, res, next) => {
   try {
     const { username, password } = req.body;
     const user = await Users.findBy({ username }).first();
