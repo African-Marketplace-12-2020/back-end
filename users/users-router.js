@@ -1,8 +1,9 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 const Users = require("./users-model");
 const { restrict } = require("./users-middleware");
+
 
 const router = express.Router();
 
@@ -15,7 +16,7 @@ router.get("/", restrict(), async (req, res, next) => {
   }
 });
 
-//create a new user
+// create a new user
 router.post("/register", async (req, res, next) => {
   try {
     const { username, password } = req.body;
@@ -55,18 +56,17 @@ router.post("/login", async (req, res, next) => {
         message: "Invalid Credentials",
       });
     }
-const token = jwt.sign({
-  userId: user.id,
-}, process.env.JWT_SECRET)
+    const token = jwt.sign(
+      {
+        userId: user.id,
+      },
+      process.env.JWT_SECRET
+    );
 
     res.json({
-      message: `Welcome ${user.username}!`, 
-      token: token
+      message: `Welcome ${user.username}!`,
+      token: token,
     });
-
-
-
-
   } catch (error) {
     next(error);
   }
