@@ -3,13 +3,13 @@
 End Points 
 
 
-LOGIN 
+LOGIN: POST REQUEST
 https://bw-172-african-marketplace.herokuapp.com/login
 
-LOGOUT
+LOGOUT: GET REQUEST
 https://bw-172-african-marketplace.herokuapp.com/logout
 
-REGISTER
+REGISTER: POST REQUEST
 https://bw-172-african-marketplace.herokuapp.com/register
 
 
